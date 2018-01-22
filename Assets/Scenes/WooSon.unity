@@ -124,8 +124,8 @@ GameObject:
   - component: {fileID: 921724699}
   - component: {fileID: 921724698}
   - component: {fileID: 921724697}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 8
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 921724696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -290,8 +290,9 @@ GameObject:
   - component: {fileID: 1569450112}
   - component: {fileID: 1569450111}
   - component: {fileID: 1569450110}
+  - component: {fileID: 1569450115}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Genji
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +311,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!23 &1569450111
 MeshRenderer:
@@ -379,6 +380,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569450115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1569450109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616bc5248b64af94e9a7e8ce10986aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  maxJumpCount: 1
+  jumpForce: 6
+  jumpDelayTime: 0.3
+  onGroundRange: 1.5
 --- !u!1 &1985002976
 GameObject:
   m_ObjectHideFlags: 0
