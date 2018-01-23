@@ -13,12 +13,23 @@ public class PlayerPhysics : MonoBehaviour {
 	[Space(10)]
 	public float onGroundRange = 2f;
 
+	[Header("SkillSettings")]
+	public float shiftForce = 6f;
+	public float skillDelayTime = 3f;
+
+	[Header("Mouse")]
+	public float mouseSpeed = 2f;
+
 	Rigidbody rigid;
 
 	Vector3 movement;
 
 	bool isOnGround;
 	bool isjumpDelaying;
+	bool isSkillDelaying;
+
+	float rotateX;
+	float rotateY;
 
 	int currentJumpCount;
 
@@ -30,12 +41,14 @@ public class PlayerPhysics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		MovementPhysics ();
 		JumpPhysics ();
+		SkillPhysics ();
 	}
 
 	void Update()
 	{
+		MovementPhysics ();
+		RotatePhysics ();
 		CheckOnGround ();
 	}
 
@@ -46,7 +59,27 @@ public class PlayerPhysics : MonoBehaviour {
 		movement = new Vector3 (horizontal, 0, vertical);
 		movement = movement.normalized * speed * Time.deltaTime;
 
-		rigid.MovePosition (transform.position + movement);
+		//rigid.MovePosition (transform.position + movement);
+		transform.Translate (movement);
+	}
+
+	void RotatePhysics(){
+		rotateX = Input.GetAxis ("Mouse X") * mouseSpeed;
+
+
+		/*rotateY = Input.GetAxis ("Mouse Y") * -mouseSpeed;
+
+		if (rotateY < -360)
+			rotateY += 360;
+		if (rotateY > 360)
+			rotateY -= 360;	
+		
+		rotateY = Mathf.Clamp (rotateY, -45, 45);
+
+		transform.Rotate (rotateY, rotateX, 0f);
+		*/
+
+		transform.Rotate (0f, rotateX, 0f);
 	}
 
 	void CheckOnGround() {
@@ -64,7 +97,7 @@ public class PlayerPhysics : MonoBehaviour {
 			return;
 		
 		currentJumpCount--;
-		rigid.AddForce (Vector3.up * jumpForce, ForceMode.Impulse);
+		rigid.AddForce (Vector3.up * (jumpForce * 100) * Time.fixedDeltaTime, ForceMode.Impulse);
 		StartCoroutine ("JumpDelay");
 
 	}
@@ -78,7 +111,20 @@ public class PlayerPhysics : MonoBehaviour {
 	#endregion
 		
 	void SkillPhysics() {
-		//TODO Skills
+		if (isSkillDelaying || !Input.GetKeyDown(KeyCode.LeftShift))
+			return;
+		
+		//rigid.AddForce (Vector3.forward * shiftForce * Time.fixedDeltaTime, ForceMode.Impulse);
+		transform.Translate(Vector3.forward * (shiftForce * 100) * Time.deltaTime);
+		StartCoroutine ("SkillDelay");
+	}
+
+	IEnumerator SkillDelay(){
+		Debug.Log ("SkillCoolTime is starting");
+		isSkillDelaying = true;
+		yield return new WaitForSeconds (skillDelayTime);
+		isSkillDelaying = false;
+		Debug.Log ("SkillCoolTime is ended");
 	}
 
 }
