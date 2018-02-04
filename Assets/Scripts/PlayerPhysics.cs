@@ -64,22 +64,16 @@ public class PlayerPhysics : MonoBehaviour {
 	}
 
 	void RotatePhysics(){
-		rotateX = Input.GetAxis ("Mouse X") * mouseSpeed;
+		rotateX += Input.GetAxis ("Mouse X") * mouseSpeed;
 
+		rotateY += Input.GetAxis ("Mouse Y") * mouseSpeed;
 
-		/*rotateY = Input.GetAxis ("Mouse Y") * -mouseSpeed;
-
-		if (rotateY < -360)
-			rotateY += 360;
-		if (rotateY > 360)
-			rotateY -= 360;	
-		
 		rotateY = Mathf.Clamp (rotateY, -45, 45);
+			
+		transform.localEulerAngles = new Vector3(-rotateY, rotateX, 0); 
 
-		transform.Rotate (rotateY, rotateX, 0f);
-		*/
+		
 
-		transform.Rotate (0f, rotateX, 0f);
 	}
 
 	void CheckOnGround() {
